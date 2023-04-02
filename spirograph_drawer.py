@@ -47,12 +47,12 @@ def update(frame, R, r, p, x, y):
 R = 100
 r = 75
 p = 50
-n_points = 1000
+n_points = 500
 angular_speed_ratio = 5  # 例: 2倍の速さで回転する
 
 theta = spirograph_theta(R, r, n_points, angular_speed_ratio)
 x, y = spirograph_xy(R, r, p, theta)
 
 fig = plt.figure()
-ani = FuncAnimation(fig, update, frames=range(n_points), fargs=(R, r, p, x, y), repeat=True)
+ani = FuncAnimation(fig, update, frames=range(n_points), fargs=(R, r, p, x, y), interval=20, repeat=True)
 plt.show()
