@@ -2,9 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-def spirograph_theta(R, r, n_points, angular_speed_ratio=2):
+def spirograph_theta(R, r, n_points, angular_speed_ratio=1):
     return np.linspace(0, 2 * np.pi * abs((r * 1.0) / np.gcd(R, r)) * angular_speed_ratio, n_points)
-
 
 def spirograph_xy(R, r, p, theta):
     x = (R - r) * np.cos(theta) + p * np.cos(((R - r) / r) * theta)
@@ -49,11 +48,11 @@ R = 100
 r = 75
 p = 50
 n_points = 1000
-speed = 1  # アニメーションのフレーム更新間隔（ミリ秒）
+angular_speed_ratio = 5  # 例: 2倍の速さで回転する
 
-theta = spirograph_theta(R, r, n_points)
+theta = spirograph_theta(R, r, n_points, angular_speed_ratio)
 x, y = spirograph_xy(R, r, p, theta)
 
 fig = plt.figure()
-ani = FuncAnimation(fig, update, frames=range(n_points), fargs=(R, r, p, x, y), interval=speed, repeat=True)
+ani = FuncAnimation(fig, update, frames=range(n_points), fargs=(R, r, p, x, y), repeat=True)
 plt.show()
