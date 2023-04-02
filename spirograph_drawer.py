@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 def draw_spirograph(R, r, p, n_points=1000):
-    theta = np.linspace(0, 2 * np.pi * abs(R - r), n_points)
-    x = (R - r) * np.cos(theta) - p * np.cos(((R - r) / r) * theta)
+    theta = np.linspace(0, 2 * np.pi * (r / np.gcd(R, r)), n_points)
+    x = (R - r) * np.cos(theta) + p * np.cos(((R - r) / r) * theta)
     y = (R - r) * np.sin(theta) - p * np.sin(((R - r) / r) * theta)
     return x, y
 
@@ -48,7 +48,7 @@ p = 50
 n_points = 1000
 
 x, y = draw_spirograph(R, r, p, n_points)
-theta = np.linspace(0, 2 * np.pi * abs(R - r), n_points)
+theta = np.linspace(0, 2 * np.pi * (r / np.gcd(R, r)), n_points)
 
 fig = plt.figure()
 ani = FuncAnimation(fig, update, frames=range(n_points), fargs=(R, r, p, x, y), interval=20, repeat=True)
