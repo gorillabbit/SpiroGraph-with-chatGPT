@@ -2,8 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-def spirograph_theta(R, r, n_points):
-    return np.linspace(0, 2 * np.pi * abs((r * 1.0) / np.gcd(R, r)), n_points)
+def spirograph_theta(R, r, n_points, angular_speed_ratio=2):
+    return np.linspace(0, 2 * np.pi * abs((r * 1.0) / np.gcd(R, r)) * angular_speed_ratio, n_points)
+
 
 def spirograph_xy(R, r, p, theta):
     x = (R - r) * np.cos(theta) + p * np.cos(((R - r) / r) * theta)
