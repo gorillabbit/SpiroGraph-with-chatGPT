@@ -10,13 +10,13 @@ def spirograph_xy(R, r, p, theta):
     y = (R - r) * np.sin(theta) - p * np.sin(((R - r) / r) * theta)
     return x, y
 
-def plot_circle(radius, theta, x_offset=0, y_offset=0, linestyle='dashed', color='gray'):
+def plot_circle(radius, theta, x_offset=0, y_offset=0):
     x = x_offset + radius * np.cos(theta)
     y = y_offset + radius * np.sin(theta)
-    plt.plot(x, y, linestyle=linestyle, color=color)
+    plt.plot(x, y, linestyle='dashed', color='gray')
 
-def plot_connection(x1, y1, x2, y2, linestyle='dotted', color='blue'):
-    plt.plot([x1, x2], [y1, y2], linestyle=linestyle, color=color)
+def plot_connection(x1, y1, x2, y2):
+    plt.plot([x1, x2], [y1, y2], linestyle='dotted', color='blue')
 
 def update(frame, R, r, p, x, y):
     plt.gca().clear()
