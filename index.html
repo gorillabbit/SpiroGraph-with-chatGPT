@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スピログラフ描写プログラム</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="spirograph" width="600" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('spirograph');
+        const ctx = canvas.getContext('2d');
+
+        function drawSpirograph(R, r, P, resolution = 1000) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+
+            for (let i = 0; i < resolution; i++) {
+                let t = i * 2 * Math.PI / resolution;
+                let x = (R - r) * Math.cos(t) + P * Math.cos((R - r) * t / r);
+                let y = (R - r) * Math.sin(t) - P * Math.sin((R - r) * t / r);
+                x = (x + 2) * canvas.width / 4;
+                y = (y + 2) * canvas.height / 4;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+
+            ctx.closePath();
+            ctx.stroke();
+        }
+
+        // ここでスピログラフの変数を設定して描画します。
+        let R = 100;
+        let r = 60;
+        let P = 50;
+        drawSpirograph(R, r, P);
+    </script>
+</body>
+</html>
