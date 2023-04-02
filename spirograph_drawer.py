@@ -1,5 +1,3 @@
-# spirograph_drawer_animated.py
-
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -25,28 +23,20 @@ def update(frame, R, r, p, x, y):
     inner_circle_y = (R - r) * np.sin(theta[frame]) + r * np.sin(inner_circle_theta)
     plt.plot(inner_circle_x, inner_circle_y, linestyle='dashed', color='gray')
 
-    # 内円の十字
-    cross_x1 = (R - r) * np.cos(theta[frame]) + r * np.cos(theta[frame]) * np.cos(theta[frame])
-    cross_y1 = (R - r) * np.sin(theta[frame]) + r * np.cos(theta[frame]) * np.sin(theta[frame])
-    cross_x2 = (R - r) * np.cos(theta[frame]) - r * np.sin(theta[frame]) * np.cos(theta[frame])
-    cross_y2 = (R - r) * np.sin(theta[frame]) - r * np.sin(theta[frame]) * np.sin(theta[frame])
-    plt.plot([cross_x1, cross_x2], [cross_y1, cross_y2], color='blue', linestyle='dotted')
-    plt.plot([cross_x1, cross_x2], [cross_y1, cross_y2], color='blue', linestyle='dotted')
-
-
+    # ペン先と内円の中心を結んだ線分
+    pen_x = (R - r) * np.cos(theta[frame]) + p * np.cos(((R - r) / r) * theta[frame])
+    pen_y = (R - r) * np.sin(theta[frame]) - p * np.sin(((R - r) / r) * theta[frame])
+    plt.plot([pen_x, (R - r) * np.cos(theta[frame])], [pen_y, (R - r) * np.sin(theta[frame])], color='blue', linestyle='dotted')
 
     # スピログラフの描画
     plt.plot(x[:frame], y[:frame])
 
     # ペンの位置の描画
-    pen_x = (R - r) * np.cos(theta[frame]) + p * np.cos(((R - r) / r) * theta[frame])
-    pen_y = (R - r) * np.sin(theta[frame]) - p * np.sin(((R - r) / r) * theta[frame])
     plt.plot(pen_x, pen_y, 'ro')
 
     plt.gca().set_aspect('equal', adjustable='box')
     plt.title(f'Spirograph (R={R}, r={r}, p={p})')
 
-# 外円の半径 (R)、内円の半径 (r)、ペンの位置 (p) を設定します
 R = 100
 r = 75
 p = 50
