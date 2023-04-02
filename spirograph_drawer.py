@@ -19,8 +19,8 @@ def draw_spirograph(R, r, p, n_points=1000):
 
     # 内円の描画
     inner_circle_theta = np.linspace(0, 2 * np.pi, n_points)
-    inner_circle_x = (R - r) * np.cos(inner_circle_theta)
-    inner_circle_y = (R - r) * np.sin(inner_circle_theta)
+    inner_circle_x = (R - r) * np.cos(theta[-1]) + r * np.cos(inner_circle_theta)
+    inner_circle_y = (R - r) * np.sin(theta[-1]) + r * np.sin(inner_circle_theta)
     plt.plot(inner_circle_x, inner_circle_y, linestyle='dashed', color='gray')
 
     # ペンの位置の描画
