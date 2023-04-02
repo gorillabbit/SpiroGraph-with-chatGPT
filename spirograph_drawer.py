@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 def draw_spirograph(R, r, p, n_points=1000):
-    theta = np.linspace(0, 2 * np.pi * (r / np.gcd(R, r)), n_points)
+    theta = np.linspace(0, 2 * np.pi * abs((r * 1.0) / np.gcd(R, r)), n_points)
     x = (R - r) * np.cos(theta) + p * np.cos(((R - r) / r) * theta)
     y = (R - r) * np.sin(theta) - p * np.sin(((R - r) / r) * theta)
     return x, y
@@ -26,16 +26,21 @@ def update(frame, R, r, p, x, y):
     plt.plot(inner_circle_x, inner_circle_y, linestyle='dashed', color='gray')
 
     # 内円の十字
-    cross_x = [(R - r) * np.cos(theta[frame]), (R - r) * np.cos(theta[frame]) + r * np.cos(theta[frame])]
-    cross_y = [(R - r) * np.sin(theta[frame]), (R - r) * np.sin(theta[frame]) + r * np.sin(theta[frame])]
-    plt.plot(cross_x, cross_y, color='blue', linestyle='dotted')
-    plt.plot(cross_x[::-1], cross_y[::-1], color='blue', linestyle='dotted')
+    cross_x1 = (R - r) * np.cos(theta[frame]) + r * np.cos(theta[frame]) * np.cos(theta[frame])
+    cross_y1 = (R - r) * np.sin(theta[frame]) + r * np.cos(theta[frame]) * np.sin(theta[frame])
+    cross_x2 = (R - r) * np.cos(theta[frame]) - r * np.sin(theta[frame]) * np.cos(theta[frame])
+    cross_y2 = (R - r) * np.sin(theta[frame]) - r * np.sin(theta[frame]) * np.sin(theta[frame])
+    plt.plot([cross_x1, cross_x2], [cross_y1, cross_y2], color='blue', linestyle='dotted')
+    plt.plot([cross_x1, cross_x2], [cross_y1, cross_y2], color='blue', linestyle='dotted')
+
+
 
     # スピログラフの描画
     plt.plot(x[:frame], y[:frame])
 
     # ペンの位置の描画
-    pen_x, pen_y = x[frame], y[frame]
+    pen_x = (R - r) * np.cos(theta[frame]) + p * np.cos(((R - r) / r) * theta[frame])
+    pen_y = (R - r) * np.sin(theta[frame]) - p * np.sin(((R - r) / r) * theta[frame])
     plt.plot(pen_x, pen_y, 'ro')
 
     plt.gca().set_aspect('equal', adjustable='box')
@@ -48,7 +53,7 @@ p = 50
 n_points = 1000
 
 x, y = draw_spirograph(R, r, p, n_points)
-theta = np.linspace(0, 2 * np.pi * (r / np.gcd(R, r)), n_points)
+theta = np.linspace(0, 2 * np.pi * abs((r * 1.0) / np.gcd(R, r)), n_points)
 
 fig = plt.figure()
 ani = FuncAnimation(fig, update, frames=range(n_points), fargs=(R, r, p, x, y), interval=20, repeat=True)
