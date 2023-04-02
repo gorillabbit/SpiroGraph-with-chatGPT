@@ -41,10 +41,12 @@ R = 100
 r = 75
 p = 50
 n_points = 1000
+speed = 0.1  # アニメーションのフレーム更新間隔（ミリ秒）
 
 x, y = draw_spirograph(R, r, p, n_points)
 theta = np.linspace(0, 2 * np.pi * abs((r * 1.0) / np.gcd(R, r)), n_points)
 
 fig = plt.figure()
-ani = FuncAnimation(fig, update, frames=range(n_points), fargs=(R, r, p, x, y), interval=20, repeat=True)
+ani = FuncAnimation(fig, update, frames=range(n_points), fargs=(R, r, p, x, y), interval=speed, repeat=True)
 plt.show()
+
