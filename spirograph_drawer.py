@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
 def spirograph_theta(R, r, angular_speed_ratio=1):
     n_points = 1000
@@ -44,3 +45,12 @@ def update(frame, R, r, p, x, y, theta):
 
     plt.gca().set_aspect('equal', adjustable='box')
     plt.title(f'Spirograph (R={R}, r={r}, p={p})')
+
+def draw_animation(fig, R, r, p, angular_speed_ratio):
+    theta = spirograph_theta(R, r, angular_speed_ratio)
+    x, y = spirograph_xy(R, r, p, theta)
+    anim = FuncAnimation(fig, update, frames=1000, fargs=(R, r, p, x, y, theta), interval=50)
+    return anim
+
+def close_animation():
+    plt.cla()
