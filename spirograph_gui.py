@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import ttk
 from spirograph_drawer import spirograph_theta, draw_spirograph_animation
 
 class SpirographGUI(tk.Tk):
@@ -8,15 +7,27 @@ class SpirographGUI(tk.Tk):
 
         self.title("Spirograph Drawer")
 
-        self.R_label = ttk.Label(self, text="R:")
-        self.R_entry = ttk.Entry(self)
-        self.r_label = ttk.Label(self, text="r:")
-        self.r_entry = ttk.Entry(self)
-        self.p_label = ttk.Label(self, text="p:")
-        self.p_entry = ttk.Entry(self)
-        self.angular_speed_ratio_label = ttk.Label(self, text="angular_speed_ratio:")
-        self.angular_speed_ratio_entry = ttk.Entry(self)
-        self.submit_button = ttk.Button(self, text="Submit", command=self.on_submit)
+        # デフォルト値を設定
+        default_R = 100
+        default_r = 75
+        default_p = 50
+        default_angular_speed_ratio = 2
+
+        # StringVarオブジェクトを作成し、デフォルト値を設定
+        R_var = tk.StringVar(value=default_R)
+        r_var = tk.StringVar(value=default_r)
+        p_var = tk.StringVar(value=default_p)
+        angular_speed_ratio_var = tk.StringVar(value=default_angular_speed_ratio)
+
+        self.R_label = tk.Label(self, text="R:")
+        self.R_entry = tk.Entry(self, textvariable=R_var)
+        self.r_label = tk.Label(self, text="r:")
+        self.r_entry = tk.Entry(self, textvariable=r_var)
+        self.p_label = tk.Label(self, text="p:")
+        self.p_entry = tk.Entry(self, textvariable=p_var)
+        self.angular_speed_ratio_label = tk.Label(self, text="angular_speed_ratio:")
+        self.angular_speed_ratio_entry = tk.Entry(self, textvariable=angular_speed_ratio_var)
+        self.submit_button = tk.Button(self, text="Submit", command=self.on_submit)
 
         self.R_label.grid(row=0, column=0)
         self.R_entry.grid(row=0, column=1)
@@ -33,9 +44,10 @@ class SpirographGUI(tk.Tk):
         r = int(self.r_entry.get())
         p = int(self.p_entry.get())
         angular_speed_ratio = float(self.angular_speed_ratio_entry.get())
+        print(angular_speed_ratio)
 
         theta = spirograph_theta(R, r, angular_speed_ratio)
-        draw_spirograph_animation(R, r, p, theta)
+        draw_spirograph_animation(R, r, p, theta, angular_speed_ratio)
 
 if __name__ == "__main__":
     app = SpirographGUI()
