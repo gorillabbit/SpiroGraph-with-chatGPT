@@ -23,6 +23,8 @@ def plot_connection(x1, y1, x2, y2):
 def update(frame, R, r, p, x, y, theta):
     plt.gca().clear()
 
+    plt.plot(x, y, color='gray', alpha=0.3)
+
     # 外円の描画
     outer_circle_theta = np.linspace(0, 2 * np.pi, 1000)
     plot_circle(R, outer_circle_theta)
