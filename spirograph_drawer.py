@@ -54,3 +54,7 @@ def draw_animation(fig, R, r, p, angular_speed_ratio):
 
 def close_animation():
     plt.cla()
+
+def close_plt():
+    plt.clf()
+    plt.close()

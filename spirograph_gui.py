@@ -2,8 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.animation import FuncAnimation
-from spirograph_drawer import spirograph_theta, update, spirograph_xy, draw_animation, close_animation
+from spirograph_drawer import draw_animation, close_animation, close_plt
 
 
 class SpirographGUI:
@@ -44,6 +43,9 @@ class SpirographGUI:
         self.angular_speed_ratio_entry.grid(row=4, column=1, sticky="w")
         self.submit_button.grid(row=0, column=2, rowspan=5, sticky=tk.NSEW)
 
+        #閉じるときに、pltをクリアする
+        self.master.protocol("WM_DELETE_WINDOW", self.on_closing)
+
         # FigureとAxesを作成
         self.fig, self.ax = plt.subplots()
 
@@ -68,6 +70,9 @@ class SpirographGUI:
 
         self.canvas.draw()
 
+    def on_closing(self):
+        close_plt()
+        self.master.destroy()
 
 def main():
     root = tk.Tk()
